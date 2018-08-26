@@ -31,7 +31,7 @@ public class HistoricoGestion {
     private String tipificacion;
     private String pregNombre;
     private String pregCotiza;
-    private String onservaciones;
+    private String observaciones;
 
     /**
      * @return the fechaLlamada
@@ -146,17 +146,17 @@ public class HistoricoGestion {
     }
 
     /**
-     * @return the onservaciones
+     * @return the observaciones
      */
-    public String getOnservaciones() {
-        return onservaciones;
+    public String getObservaciones() {
+        return observaciones;
     }
 
     /**
-     * @param onservaciones the onservaciones to set
+     * @param onservaciones the observaciones to set
      */
-    public void setOnservaciones(String onservaciones) {
-        this.onservaciones = onservaciones;
+    public void setObservaciones(String onservaciones) {
+        this.observaciones = onservaciones;
     }
     
     

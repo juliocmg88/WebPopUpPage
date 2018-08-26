@@ -301,4 +301,10 @@ $(document).ready(function(){
             }
             window.open("/WebPopUpPage/CallHistoryServlet?histCliente="+ncliente,'mywindow','width=400,height=200,toolbar=no,location=no');
         });
+        
+        $("#close_button").click(function(){
+            window.close();
+        });
+        
+        
 });
