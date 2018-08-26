@@ -79,7 +79,6 @@ public class CallHistoryServlet extends HttpServlet {
                     }
                 }
             }
-            Object[] object = (Object[]) objList.get(3) ;
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");            
@@ -139,7 +138,7 @@ public class CallHistoryServlet extends HttpServlet {
             out.println("<title>Historico de Gestión</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<table>");
+            out.println("<table class=\"table table-striped table-bordered dataTable no-footer\">");
                 out.println("<thead>");                
                 out.println("<tr>");   
                     out.println("<th>Fecha de Gestion</th>"); 
@@ -152,7 +151,6 @@ public class CallHistoryServlet extends HttpServlet {
                     out.println("<th>Envio Cotizacion</th>");
                     out.println("<th>Observaciones</th>");
                 out.println("</tr>");
-                //out.println("<h1>NCliente " + object[2]+ "</h1>"); 
                 out.println("<thead>");  
                 out.println("<tbody>");     
                 for(int k=0;k<hgl.size();k++){
