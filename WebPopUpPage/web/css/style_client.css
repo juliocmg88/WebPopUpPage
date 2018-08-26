@@ -1,0 +1,43 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 09-07-2018, 17:56:21
+    Author     : Sebastian
+*/
+
+
+
+      .ContextItem    /*Context Menu Item Style*/
+        {
+            font-family: 'robotoregular', sans-serif;
+            color:#4A73A5;
+            background-color:White;
+            font-weight:normal;
+            
+            }
+     .ContextItem:hover   /*Context Menu Item Style On Mouse Over*/
+       {
+            font-family: 'robotoregular', sans-serif;
+            background-color:#0066FF;
+            color:White;
+            font-weight:bold;            
+        }
+       .detailItem
+       {
+           background:transparant;
+           
+       }
+       .detailItem:hover
+       {
+           background-color:#FEE378;
+           border: 1px outset #222222;
+           font-weight:bold;
+           cursor:default;
+       }
+       
+       .custbtn{
+    background-color: #cc0000;
+}

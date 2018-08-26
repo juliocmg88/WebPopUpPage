@@ -1,0 +1,44 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 17-08-2018, 11:06:42
+    Author     : Sebastian
+*/
+
+.fullscreen-container {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 999;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  display: none;
+}
+
+#popdiv {
+  height: 70%;
+  width: 60%;
+  background-color: #97ceaa;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+#observacionInfo {    
+  height: 150px;
+  width: 320px;;
+}
+
+#divObsvr {
+  position: fixed;
+  height: 90%;
+  width: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
