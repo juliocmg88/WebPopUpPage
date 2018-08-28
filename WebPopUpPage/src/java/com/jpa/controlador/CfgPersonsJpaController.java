@@ -150,4 +150,18 @@ public class CfgPersonsJpaController implements Serializable {
         }
     }
     
+    public List<CfgPersons> findCfgPersonsByLoginId(int loginId) {
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<CfgPersons> tqcp = em.createNamedQuery("CfgPersons.findByLoginid",
+                    CfgPersons.class);
+            tqcp.setParameter("loginid", loginId);
+            List<CfgPersons> lcp = tqcp.getResultList();
+            return lcp;
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
 }

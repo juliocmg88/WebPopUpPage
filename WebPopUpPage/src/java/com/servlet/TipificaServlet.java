@@ -52,6 +52,8 @@ public class TipificaServlet extends HttpServlet {
             String codTermino = request.getParameter("tipifBox");  
             String fecha=request.getParameter("schedDate");
             String hora=request.getParameter("schedTime");
+            DateFormat format0 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date callTime= format0.parse(request.getParameter("tipCallTime"));
             if(fecha!=null && !fecha.equals("") && hora!=null && !hora.equals("")){
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 Date schedTime = format.parse(fecha+" "+hora);
@@ -60,6 +62,7 @@ public class TipificaServlet extends HttpServlet {
             //Actualiza ct_wurth2
             cw.setAttempts(cw.getAttempts()+1);
             cw.setCallResult(terminoStringToInt(codTermino));
+            cw.setCallTime(callTime);
             try {
                 jcw.edit(cw);
             } catch (Exception ex) {
@@ -67,12 +70,11 @@ public class TipificaServlet extends HttpServlet {
             }
             response.sendRedirect("/WebPopUpPage/Agent2Servlet");
             //Inserta en logs_survey_interactions_web_page
-            Date crrTime = new Date();
             String pregNombre = "";
             String pregCotiza = "";
             String connid = UUID.randomUUID().toString();
             connid = connid.replace("-", "");
-            ls.setCrrTime(crrTime);
+            ls.setCrrTime(callTime);
             ls.setPhone(request.getParameter("tipFono"));
             ls.setConnid(connid);
             ls.setImportId(Integer.parseInt(request.getParameter("tipFono")));

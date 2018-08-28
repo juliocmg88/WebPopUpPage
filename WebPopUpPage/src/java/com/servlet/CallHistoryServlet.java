@@ -135,31 +135,45 @@ public class CallHistoryServlet extends HttpServlet {
             out.println("<script defer=\"\" src=\"javascript/script.js\" type=\"text/javascript\"></script>");
             out.println("<script type=\"text/javascript\" src=\"javascript/eventscript.js\"></script>");
             out.println("<script type=\"text/javascript\" src=\"javascript/call_actions.js\"></script>");
+            out.println("<script type=\"text/javascript\" src=\"javascript/history_actions.js\"></script>");
             out.println("<title>Historico de Gestión</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<table class=\"table table-striped table-bordered dataTable no-footer\">");
+            out.println("<div class=\"divHeader\">");           
+                    out.println("Histórico de Gestiones");
+                out.println("</div>");
+            out.println("<div>");
+                out.println("<img class=\"logo img-responsive\" src=\"css/images/wurth-chile-logo-1504724576.png\" alt=\"Wurth Chile\" width=\"165\" height=\"35\">");
+            out.println("</div>");
+            out.println("<section class=\"wrapper\">");
+            out.println("<div class=\"row\">");
+            out.println("<div>");
+            if(hgl.size()>0){
+                out.println("<h3>"+hgl.get(0).getnClient()+": "+hgl.get(0).getNameClient()+"</h3>");
+            }
+            out.println("</div>");
+            out.println("<div>");
+            if(hgl.size()>0){
+            out.println("<table class=\"table table-striped table-bordered no-footer\">");
                 out.println("<thead>");                
-                out.println("<tr>");   
-                    out.println("<th>Fecha de Gestion</th>"); 
-                    out.println("<th>Id Usuario que Gestionó</th>");
-                    out.println("<th>NClient</th>");
-                    out.println("<th>Nombre de Cliente</th>");
-                    out.println("<th>Telefono</th>");
-                    out.println("<th>Tipifiacion</th>");
-                    out.println("<th>Pregunta Nombre</th>");
-                    out.println("<th>Envio Cotizacion</th>");
-                    out.println("<th>Observaciones</th>");
-                out.println("</tr>");
-                out.println("<thead>");  
+                    out.println("<tr>");   
+                        out.println("<th>Fecha de Gestion</th>"); 
+                        out.println("<th>Id Usuario que Gestionó</th>");
+                        out.println("<th>Telefono</th>");
+                        out.println("<th>Tipificacion</th>");
+                        out.println("<th>Pregunta Nombre</th>");
+                        out.println("<th>Envio Cotizacion</th>");
+                        out.println("<th>Observaciones</th>");
+                    out.println("</tr>");
+                out.println("</thead>");
                 out.println("<tbody>");     
                 for(int k=0;k<hgl.size();k++){
                     HistoricoGestion defaultHg = hgl.get(k);
                     out.println("<tr>"); 
                         out.println("<td>"+defaultHg.getFechaLlamada()+"</td>");
                         out.println("<td>"+defaultHg.getUserAgent()+"</td>");
-                        out.println("<td>"+defaultHg.getnClient()+"</td>");
-                        out.println("<td>"+defaultHg.getNameClient()+"</td>");
+                        //out.println("<td>"+defaultHg.getnClient()+"</td>");
+                        //out.println("<td>"+defaultHg.getNameClient()+"</td>");
                         out.println("<td>"+defaultHg.getTelefono()+"</td>");
                         out.println("<td>"+defaultHg.getTipificacion()+"</td>");
                         out.println("<td>"+defaultHg.getPregNombre()+"</td>");
@@ -169,9 +183,15 @@ public class CallHistoryServlet extends HttpServlet {
                 }
                 out.println("</tbody>");
             out.println("</table>");
-            out.println("<div>");
-            out.println("<button type=\"button\" id=\"close_button\" class=\"btn btn-primary custbtn\">Cerrar</button>"); 
+            } else{
+                out.println("<h3>El NCliente "+histCliente+" no tiene histórico de gestiones</h3>");
+            }
             out.println("</div>");
+            out.println("<div>");
+            out.println("<button type=\"button\" onclick=\"close_window();return false;\" class=\"btn btn-primary custbtn\">Cerrar</button>"); 
+            out.println("</div>");
+            out.println("</div>");
+            out.println("</section>");
             out.println("</body>");
             out.println("</html>");
         }

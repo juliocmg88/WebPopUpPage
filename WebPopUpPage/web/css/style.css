@@ -463,11 +463,12 @@ table.dataTable {
 	font-family: 'robotoregular', sans-serif;
 }
 .table-striped>tbody>tr:nth-of-type(odd) {
-    color: #31708f;
-    background-color: #f2f9fc;
+    color: #605d5c;
+    background-color: #959595;
 }
 .table-striped>tbody>tr:nth-of-type(even) {
-    color: #31708f;
+    color: #605d5c;
+    background-color: white;
 }
 .dataTables_wrapper .dataTables_filter > label{
 	font-size:15px;

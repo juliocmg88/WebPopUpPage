@@ -8,6 +8,7 @@ package com.bean;
 import com.entidades.CfgPersons;
 import com.entidades.TestRegistration;
 import com.jpa.controlador.CfgPersonsJpaController;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -41,6 +42,10 @@ public class JavaBeanCfgPersons {
             return 0;
         } */      
         return cfgPersonsControl.getCfgPersonsByUsername(usuario);
+    }
+    
+    public List<CfgPersons> findCfgPersonsByLoginId(int loginId){
+        return cfgPersonsControl.findCfgPersonsByLoginId(loginId);
     }
 }
     

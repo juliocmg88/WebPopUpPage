@@ -96,6 +96,13 @@
                   sesion.setAttribute("nivel", nivel);
                   response.sendRedirect("/WebPopUpPage/AgentServlet");
               }
+              if(nivel==2){
+                  sesion.setAttribute("username", request.getAttribute("username"));
+                  sesion.setAttribute("fullname", request.getAttribute("fullname"));
+                  sesion.setAttribute("anexo", request.getAttribute("anexo"));
+                  sesion.setAttribute("nivel", nivel);
+                  response.sendRedirect("/WebPopUpPage/Superv2Servlet");
+              }
           }
           
           if(request.getParameter("cerrar")!=null){

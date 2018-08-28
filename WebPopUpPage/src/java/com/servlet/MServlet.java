@@ -52,6 +52,8 @@ public class MServlet extends HttpServlet {
         cp.setUserpwd(BCrypt.hashpw(password, BCrypt.gensalt()));
         cp.setCrrUsername(rut);
         cp.setDefaultexten(anexo);
+        cp.setLoginid(1);
+        cp.setActive(true);
         JavaBeanCfgPersons cptr = new JavaBeanCfgPersons();
         cptr.guardar(cp);
         try (PrintWriter out = response.getWriter()) {

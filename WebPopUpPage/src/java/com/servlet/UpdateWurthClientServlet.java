@@ -53,7 +53,10 @@ public class UpdateWurthClientServlet extends HttpServlet {
             Long recordId = Long.parseLong(request.getParameter("record_id_"+rowid));            
             CtWurth2 cwUpd = new CtWurth2();       
             CtWurth2 cwOrg = jbcw.findCtWurth2(recordId);
-            cwUpd.setRecordType(cwOrg.getRecordType());
+            cwUpd.setRecordType(cwOrg.getRecordType());    
+            cwUpd.setCallTime(cwOrg.getCallTime());
+            cwUpd.setSchedTime(cwOrg.getSchedTime());         
+            cwUpd.setImportId(cwOrg.getImportId());
             cwUpd.setRecordStatus(cwOrg.getRecordStatus());
             cwUpd.setAttempts(cwOrg.getAttempts());
             cwUpd.setCallResult(cwOrg.getCallResult());

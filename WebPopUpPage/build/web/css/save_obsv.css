@@ -22,7 +22,7 @@ and open the template in the editor.
 #popdiv {
   height: 70%;
   width: 60%;
-  background-color: #97ceaa;
+  background-color: #DEDEDE;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -30,8 +30,8 @@ and open the template in the editor.
 }
 
 #observacionInfo {    
-  height: 150px;
-  width: 320px;;
+  height: 197px;
+  width: 608px;;
 }
 
 #divObsvr {

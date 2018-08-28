@@ -8,11 +8,21 @@ and open the template in the editor.
     Author     : Sebastian
 */
 
-
+@import url('../fonts/fontwurth/css_wurth_fonts.css');
+body {
+    font-family: 'Wuerth Book', sans-serif;
+    font-size: 16px;
+    background: #DEDEDE;
+    /*font-weight: 300;
+    color: #888;
+    line-height: 30px;
+    text-align: center;
+    background: #fff;*/
+}
 
       .ContextItem    /*Context Menu Item Style*/
         {
-            font-family: 'robotoregular', sans-serif;
+            font-family: 'Wuerth Book', sans-serif;
             color:#4A73A5;
             background-color:White;
             font-weight:normal;
@@ -20,7 +30,7 @@ and open the template in the editor.
             }
      .ContextItem:hover   /*Context Menu Item Style On Mouse Over*/
        {
-            font-family: 'robotoregular', sans-serif;
+            font-family: 'Wuerth Book', sans-serif;
             background-color:#0066FF;
             color:White;
             font-weight:bold;            
@@ -40,4 +50,35 @@ and open the template in the editor.
        
        .custbtn{
     background-color: #cc0000;
+}
+
+.custbtn:hover{
+    background-color: #605c5d;
+}
+
+.form-custm {
+    color: #cc0000;
+}
+
+/*Se cambiaron todos los al codigo background-color : #6C0000*/
+table.dataTable tbody>tr.selected,table.dataTable tbody>tr>.selected{background-color:#CC0000}table.dataTable.stripe tbody>tr.odd.selected,table.dataTable.stripe tbody>tr.odd>.selected,table.dataTable.display tbody>tr.odd.selected,table.dataTable.display tbody>tr.odd>.selected{background-color:#CC0000}table.dataTable.hover tbody>tr.selected:hover,table.dataTable.hover tbody>tr>.selected:hover,table.dataTable.display tbody>tr.selected:hover,table.dataTable.display tbody>tr>.selected:hover{background-color:#CC0000}table.dataTable.order-column tbody>tr.selected>.sorting_1,table.dataTable.order-column tbody>tr.selected>.sorting_2,table.dataTable.order-column tbody>tr.selected>.sorting_3,table.dataTable.order-column tbody>tr>.selected,table.dataTable.display tbody>tr.selected>.sorting_1,table.dataTable.display tbody>tr.selected>.sorting_2,table.dataTable.display tbody>tr.selected>.sorting_3,table.dataTable.display tbody>tr>.selected{background-color:#CC0000}table.dataTable.display tbody>tr.odd.selected>.sorting_1,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_1{background-color:#CC0000}table.dataTable.display tbody>tr.odd.selected>.sorting_2,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_2{background-color:#CC0000}table.dataTable.display tbody>tr.odd.selected>.sorting_3,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_3{background-color:#CC0000}table.dataTable.display tbody>tr.even.selected>.sorting_1,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_1{background-color:#CC0000}table.dataTable.display tbody>tr.even.selected>.sorting_2,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_2{background-color:#CC0000}table.dataTable.display tbody>tr.even.selected>.sorting_3,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_3{background-color:#CC0000}table.dataTable.display tbody>tr.odd>.selected,table.dataTable.order-column.stripe tbody>tr.odd>.selected{background-color:#CC0000}table.dataTable.display tbody>tr.even>.selected,table.dataTable.order-column.stripe tbody>tr.even>.selected{background-color:#CC0000}table.dataTable.display tbody>tr.selected:hover>.sorting_1,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_1{background-color:#CC0000}table.dataTable.display tbody>tr.selected:hover>.sorting_2,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_2{background-color:#CC0000}table.dataTable.display tbody>tr.selected:hover>.sorting_3,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_3{background-color:#CC0000}table.dataTable.display tbody>tr:hover>.selected,table.dataTable.display tbody>tr>.selected:hover,table.dataTable.order-column.hover tbody>tr:hover>.selected,table.dataTable.order-column.hover tbody>tr>.selected:hover{background-color:#CC0000}table.dataTable tbody td.select-checkbox,table.dataTable tbody th.select-checkbox{position:relative}table.dataTable tbody td.select-checkbox:before,table.dataTable tbody td.select-checkbox:after,table.dataTable tbody th.select-checkbox:before,table.dataTable tbody th.select-checkbox:after{display:block;position:absolute;top:1.2em;left:50%;width:12px;height:12px;box-sizing:border-box}table.dataTable tbody td.select-checkbox:before,table.dataTable tbody th.select-checkbox:before{content:' ';margin-top:-6px;margin-left:-6px;border:1px solid black;border-radius:3px}table.dataTable tr.selected td.select-checkbox:after,table.dataTable tr.selected th.select-checkbox:after{content:'\2714';margin-top:-11px;margin-left:-4px;text-align:center;text-shadow:1px 1px #B0BED9, -1px -1px #B0BED9, 1px -1px #B0BED9, -1px 1px #B0BED9}div.dataTables_wrapper span.select-info,div.dataTables_wrapper span.select-item{margin-left:0.5em}@media screen and (max-width: 640px){div.dataTables_wrapper span.select-info,div.dataTables_wrapper span.select-item{margin-left:0;display:block}}table.dataTable tbody tr.selected,table.dataTable tbody th.selected,table.dataTable tbody td.selected{color:white}table.dataTable tbody tr.selected a,table.dataTable tbody th.selected a,table.dataTable tbody td.selected a{color:#a2d4ed}
+
+.divHeader {
+    font-family: 'Wuerth Bold', sans-serif;
+    text-align: right;
+    background-color:#cc0000;
+    color: white;    
+}
+
+.custbtn{
+    background-color: #cc0000;
+}
+.custbtn:hover{
+    background-color: #605c5d;
+}
+
+.custbtn:disabled{
+  border: 1px solid #999999;
+  background-color: #605c5d;
+  color: white;
 }

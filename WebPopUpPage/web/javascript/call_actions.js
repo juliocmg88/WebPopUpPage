@@ -6,6 +6,7 @@
 var par; 
 var globalControl="hoy_record_0";
 var globalDetail="hoy_client_detail_0";
+var company = "8";
 function rowSelected(control,detail){    
             globalControl=control;
             globalDetail=detail;
@@ -15,6 +16,8 @@ function rowSelected(control,detail){
             var divDetail = document.getElementById(detail);
             var divParent = document.getElementsByClassName("class_detail");  
             var divChildren = Array.from(divParent);
+            //var classFieldHidden = document.getElementsByClassName("myHiddenFieldClass");
+            //var childrenFieldHidden = Array.from(classFieldHidden);
             for (j=0;j<divChildren.length;j++){
                 divChildren[j].style.display = 'none';
             }
@@ -24,15 +27,19 @@ function rowSelected(control,detail){
                 }else{
                     children[i].className="even";                    
                 }
-            }
+            }            
+           /* for (j=0;j<childrenFieldHidden.length;j++){
+                divChildren[j].value = 'control';
+            }*/
             if(clase==="odd"){
                 document.getElementById(control).className="odd selected";
             }else{
                 document.getElementById(control).className="even selected";                
             }
             divDetail.style.display = 'inline';
-            $("#save_button").prop("disabled", true);
-            document.getElementById('myField').value=control;
+            $("#hoy_save_button,#sch_save_button").prop("disabled", true);
+            //document.getElementById('myField').value=control;
+            $(".myHiddenFieldClass#myField").val(control);
         }
 
 $(document).ready(function(){
@@ -46,89 +53,20 @@ $(document).ready(function(){
          $("#schedList").css({display:"none"});
          /*$("#hoy_client_detail_0").css({display:"inline"});
          $("#sch_client_detail_0").css({display:"none"});*/
-        $(".class_detail").css({display:"none"});
-        $("#"+globalDetail).css({display:"inline"});
+        //$(".class_detail").css({display:"none"});
+        //$("#"+globalDetail).css({display:"inline"});
     });
     $("#schBtn").click(function(){
          $("#todayList").css({display:"none"});
          $("#schedList").css({display:"inline"});
          /*$("#hoy_client_detail_0").css({display:"none"});
          $("#sch_client_detail_0").css({display:"inline"});*/
-        $(".class_detail").css({display:"none"});
-        $("#"+globalDetail).css({display:"inline"});
+        //$(".class_detail").css({display:"none"});
+        //$("#"+globalDetail).css({display:"inline"});
         
      });
-    
-    /*$("tr").contextmenu(function(e){
-        e.preventDefault();
-        var posx = e.clientX +window.pageXOffset +'px'; //Left Position of Mouse Pointer
-        var posy = e.clientY + window.pageYOffset + 'px'; //Top Position of Mouse Pointer
-        $("#contextMenu").css({position:"absolute",display:"inline",left:posx,top:posy});
-        par = this; 
-    });         
-        $(".ContextItem").click(function(){
-            $("#contextMenu").css({display:"none"});
-            var dataTable = Array.from(document.getElementsByClassName("dataTableBody"));
-            var anexo = dataTable[0].id;
-            var children = Array.from(par.getElementsByTagName("td"));
-            var telefono="";
-            var i;
-            for(i=0;i<children.length;i++){
-                if (children[i].id==="contact_info"){
-                    telefono=children[i].innerHTML;
-                }
-            }
-            //alert(event.target.id);
-            $.ajax({
-                    url: "http://192.168.1.2:8088/asterisk/mxml",
-                    type:"GET",
-                    //headers:{"Access-Control-Allow-Origin":"*"},
-                    xhrFields: {
-                                withCredentials: true
-                    },
-                    crossDomain: true,
-                    data: {action:"login",username:"outcall",secret:"call1248"},
-                    dataType: "json",
-                    success: function(){
-                            $.ajax({
-                                    url: "http://192.168.1.2:8088/asterisk/mxml",
-                                    type:"GET",
-                                    xhrFields: {
-                                                withCredentials: true
-                                               },
-                                    crossDomain: true,
-                                    data: {
-                                            action:"originate",
-                                            channel: "SIP/"+anexo,
-                                            priority: "1",
-                                            exten: "8"+telefono,
-                                            context: "from-wurth"
-                                          },
-                                    dataType: "json"
-                            });  
-                    },
-                     error: function () {
-                            $.ajax({
-                                    url: "http://192.168.1.2:8088/asterisk/mxml",
-                                    type:"GET",
-                                    xhrFields: {
-                                                withCredentials: true
-                                    },
-                                    crossDomain: true,
-                                    data: {
-                                            action:"originate",
-                                            channel: "SIP/"+anexo,
-                                            priority: "1",
-                                            exten: "8"+telefono,
-                                            context: "to-pstn"
-                                          },
-                                    dataType: "json"
-                            });
-                    }
-            });
-        });*/
         
-        $("#call_button").click(function(){
+        $("#hoy_call_button,#sch_call_button").click(function(){
             var dataTable = Array.from(document.getElementsByClassName("dataTableBody"));      
             var anexo = dataTable[0].id;            
             var fonoParent = document.getElementsByClassName("fono");  
@@ -179,12 +117,36 @@ $(document).ready(function(){
                     importid = importidParent[j].value;                    
                 }
             }
+            var dt = new Date();
+            var dia = dt.getDate();
+            var mes =dt.getMonth()+1;
+            var anio = dt.getFullYear();
+            var hora = dt.getHours();
+            var minuto = dt.getMinutes();
+            var segundo = dt.getSeconds();
+            if(dia<10){
+                dia='0'+dia;
+            }
+            if(mes<10){
+                mes='0'+mes;
+            }
+            if(hora<10){
+                hora='0'+hora;
+            }
+            if(minuto<10){
+                minuto='0'+minuto;
+            }
+            if(segundo<10){
+                segundo='0'+segundo;
+            }
+            var time = dia+"/"+mes+"/"+anio+" "+hora+":"+minuto+":"+segundo;
             $("#tipFono").val(telefono);            
             $("#tipNClient").val(ncliente);          
             $("#tipNomClient").val(nomcliente);         
             $("#tipRecordId").val(recordid);      
             $("#tipAgentDn").val(agentdn);      
             $("#tipImportId").val(importid);
+            $("#tipCallTime").val(time);
             $.ajax({
                     url: "http://192.168.1.2:8088/asterisk/mxml",
                     type:"GET",
@@ -207,7 +169,7 @@ $(document).ready(function(){
                                             action:"originate",
                                             channel: "SIP/"+anexo,
                                             priority: "1",
-                                            exten: "8"+telefono,
+                                            exten: company+telefono,
                                             context: "from-wurth"
                                           },
                                     dataType: "json"
@@ -225,7 +187,7 @@ $(document).ready(function(){
                                             action:"originate",
                                             channel: "SIP/"+anexo,
                                             priority: "1",
-                                            exten: "8"+telefono,
+                                            exten: company+telefono,
                                             context: "to-pstn"
                                           },
                                     dataType: "json"
@@ -255,8 +217,9 @@ $(document).ready(function(){
             $(".fullscreen-container").fadeTo(200, 1);
         });
         
-        $("#edit_button").click(function(){       
-            var divParent = document.getElementsByClassName("class_detail");  
+        $("#hoy_edit_button,#sch_edit_button").click(function(){       
+            var divParent = document.getElementsByClassName("class_detail"); 
+            var esteId=$(this).attr("id");
             for (j=0;j<divParent.length;j++){
                 var parent = divParent[j];
                 if (parent.style.display === 'inline'){
@@ -268,8 +231,12 @@ $(document).ready(function(){
                     }
                 }
             }
-            $("#save_button").prop("disabled", false);
-            
+            if(esteId==="hoy_edit_button"){
+                $("#hoy_save_button").prop("disabled", false);                
+            } 
+            if(esteId==="sch_edit_button") {
+                $("#sch_save_button").prop("disabled", false);
+            }
         });
         
         $("#observacionInfo").on("change",function() {
@@ -290,7 +257,11 @@ $(document).ready(function(){
             }
         });
         
-        $("#hist_button").click(function(){
+        $('input[type=radio][name=company]').change(function(){
+            company =$(this).val();
+        });
+        
+        $("#hoy_hist_button,#sch_hist_button").click(function(){
             var nClientParent = document.getElementsByClassName("numclient");            
             var ncliente="";            
             for (j=0;j<nClientParent.length;j++){
@@ -299,12 +270,32 @@ $(document).ready(function(){
                     ncliente = nClientParent[j].value;                    
                 }
             }
-            window.open("/WebPopUpPage/CallHistoryServlet?histCliente="+ncliente,'mywindow','width=400,height=200,toolbar=no,location=no');
+            window.open("/WebPopUpPage/CallHistoryServlet?histCliente="+ncliente,'mywindow','width=1200,height=600,toolbar=no,location=no');
         });
         
-        $("#close_button").click(function(){
-            window.close();
+        $("#tipifBox").change(function(){
+            var val = $(this).val();
+            if(val==="ANSWER"){
+                $("#contactBox").prop("disabled", false);
+                $("#contactBox").val("contacto_directo");
+                $("#cotizaBox").val("si"); 
+            } else {
+                $("#contactBox").prop("disabled", true);
+                $("#cotizaBox").prop("disabled", true);
+                $("#contactBox").val("");
+                $("#cotizaBox").val("");
+            }
         });
         
+        $("#contactBox").change(function(){
+            var val = $(this).val();
+            if(val==="contacto_directo"){
+                $("#cotizaBox").prop("disabled", false);
+                $("#cotizaBox").val("si");  
+            } else {
+                $("#cotizaBox").prop("disabled", true);
+                $("#cotizaBox").val("");
+            }
+        });
         
 });

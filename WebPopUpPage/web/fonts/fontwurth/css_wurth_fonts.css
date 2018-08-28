@@ -10,6 +10,13 @@ and open the template in the editor.
 
 @font-face {
   font-family: 'Wuerth Book';
-  src: url('fonts/fontwurth/WuerthBook.ttf') format('truetype'),
-       url('fonts/fontwurth/WuerthBook_1.woff') format('woff');
+  src: url('WuerthBook.ttf') format('truetype'),
+       url('WuerthBook_1.woff') format('woff'),
+       url('WuerthBook.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Wuerth Bold';
+  src: url('WuerthBold.ttf') format('truetype'),
+       url('WuerthBold.woff2') format('woff2');
 }

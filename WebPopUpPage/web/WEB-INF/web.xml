@@ -43,6 +43,10 @@
         <servlet-name>CallHistoryServlet</servlet-name>
         <servlet-class>com.servlet.CallHistoryServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Superv2Servlet</servlet-name>
+        <servlet-class>com.servlet.Superv2Servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MServlet</servlet-name>
         <url-pattern>/MServlet</url-pattern>
@@ -74,6 +78,10 @@
     <servlet-mapping>
         <servlet-name>CallHistoryServlet</servlet-name>
         <url-pattern>/CallHistoryServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Superv2Servlet</servlet-name>
+        <url-pattern>/Superv2Servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

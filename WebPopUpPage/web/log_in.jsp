@@ -61,11 +61,11 @@
 			                    
 			                    	<div class="form-group">
 			                    		<label class="sr-only" for="usernameBox">Usuario</label>
-			                        	<input type="text" name="usernameBox" placeholder="Usuario..." class="form-username form-control" id="username">
+			                        	<input type="text" name="usernameBox" placeholder="Usuario..." class="form-username form-control form-custm" id="username">
 			                        </div>
 			                        <div class="form-group">
 			                        	<label class="sr-only" for="passwordBox">Contraseña</label>
-			                        	<input type="password" name="passwordBox" placeholder="Contraseña..." class="form-password form-control" id="password">
+			                        	<input type="password" name="passwordBox" placeholder="Contraseña..." class="form-password form-control form-custm" id="password">
 			                        </div>
                                                 <button type="submit" name="btnInicio" class="btn btn-primary custbtn">Iniciar Sesión</button>
 			                    </form>
@@ -95,6 +95,13 @@
                   sesion.setAttribute("anexo", request.getAttribute("anexo"));
                   sesion.setAttribute("nivel", nivel);
                   response.sendRedirect("/WebPopUpPage/Agent2Servlet");
+              }
+              if(nivel==2){
+                  sesion.setAttribute("username", request.getAttribute("username"));
+                  sesion.setAttribute("fullname", request.getAttribute("fullname"));
+                  sesion.setAttribute("anexo", request.getAttribute("anexo"));
+                  sesion.setAttribute("nivel", nivel);
+                  response.sendRedirect("/WebPopUpPage/Superv2Servlet");
               }
           }
           
