@@ -159,5 +159,34 @@ public class LogsSurveyInteractionsWebPageJpaController implements Serializable 
         List list =tqo.getResultList();
         return list;
     }
+       public List reporte(String fecha1, String fecha2,String nombre){
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.getTransaction().commit();
+        StoredProcedureQuery tqo = em.createNamedStoredProcedureQuery("sp_getResumenGestiones");        
+	//tqo.registerStoredProcedureParameter("p_cliente", String.class, ParameterMode.IN);
+        tqo.setParameter("p_fechaini", fecha1);
+        tqo.setParameter("p_fechafin", fecha2);
+        tqo.setParameter("p_usuarios", nombre);
+        tqo.execute();
+        List list =tqo.getResultList();
+        return list;
+    }
+    
+    
+    
+            public List reporte2(String fecha1, String fecha2,String nombre){
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.getTransaction().commit();
+        StoredProcedureQuery tqo = em.createNamedStoredProcedureQuery("sp_getTotalGestiones");        
+	//tqo.registerStoredProcedureParameter("p_cliente", String.class, ParameterMode.IN);
+        tqo.setParameter("p_fechaini", fecha1);
+        tqo.setParameter("p_fechafin", fecha2);
+        tqo.setParameter("p_usuarios", nombre);
+        tqo.execute();
+        List list =tqo.getResultList();
+        return list;
+    }
     
 }

@@ -9,6 +9,8 @@ import com.bean.JavaBeanCtWurth;
 import com.bean.JavaBeanCtWurth2;
 import com.entidades.CtWurth;
 import com.entidades.CtWurth2;
+import ds.desktop.notify.DesktopNotify;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -16,7 +18,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.UUID;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -30,9 +36,19 @@ import javax.servlet.http.HttpSession;
  *
  * @author Sebastian
  */
-public class Agent2Servlet extends HttpServlet {
-
+public class Agent2Servlet extends HttpServlet implements Runnable {
+ CtWurth2 defaultCw;
+  CtWurth2 agenda;
+  Thread t;
+ int k;
+ PrintWriter Out;
+    List<CtWurth2> lcw=null;
+            CtWurth2 cw;
+            HttpServletRequest request;
+            String Nombreglobal;
     /**
+     * 
+     * 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -41,6 +57,13 @@ public class Agent2Servlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+            public Agent2Servlet(){
+             // t= new   Thread(this,"hilo");
+             // t.start();
+
+            }
+  
+   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             response.setContentType("text/html;charset=UTF-8");
@@ -48,11 +71,17 @@ public class Agent2Servlet extends HttpServlet {
             response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
             response.setHeader("Access-Control-Allow-Headers", "*");
             response.setHeader("Access-Control-Max-Age", "86400");
+              t= new   Thread(this,"hilo");
+              t.start();
+
         try (PrintWriter out = response.getWriter()) {
             RequestDispatcher rd = null;
             Integer initSelected;
+            this.Out=out;
             try{
                 initSelected = Integer.parseInt(request.getSession().getAttribute("edited_row").toString());
+                        this.request=request;
+
             } catch(Exception e){
                 initSelected=0;                
             }
@@ -60,8 +89,9 @@ public class Agent2Servlet extends HttpServlet {
             
             /* TODO output your page here. You may use following sample code. */
             JavaBeanCtWurth2 jbcw = new JavaBeanCtWurth2();
-            
-            /*Calendar cal = Calendar.getInstance(); // locale-specific
+                    Nombreglobal=request.getSession().getAttribute("username").toString();
+
+           /*Calendar cal = Calendar.getInstance(); // locale-specific
                     cal.setTime(new Date());
                     cal.set(Calendar.DAY_OF_MONTH, 1);
                     cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -69,9 +99,8 @@ public class Agent2Servlet extends HttpServlet {
                     cal.set(Calendar.SECOND, 0);
                     cal.set(Calendar.MILLISECOND, 0);
             List<CtWurth2> lcw =jbcw.findCtWurthEntitiesBySchedTime(request.getSession().getAttribute("username").toString(),cal.getTime());*/
-            List<CtWurth2> lcw=null;
-            CtWurth2 cw;
-            CtWurth2 defaultCw;
+           
+            String divFirstTime="";
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");  
@@ -182,7 +211,7 @@ for(int ii=0;ii<=1;ii++){
     String divDayId="";
     String divDayDisplay="";
     if(ii==0){
-        lcw =jbcw.findCtWurthEntitiesByTodayTime(request.getSession().getAttribute("username").toString());
+        lcw =jbcw.findCtWurthEntitiesByImport(request.getSession().getAttribute("username").toString());
         divDayId= "todayList";
         divDayDisplay="display:inline;";
         divDayMark="hoy_";
@@ -191,10 +220,13 @@ for(int ii=0;ii<=1;ii++){
         divDayId= "schedList";
         divDayDisplay="display:none;";
         divDayMark="sch_";
+        
     }
 
 out.println("<div id=\""+divDayId+"\" style=\""+divDayDisplay+"\" >");
 out.println("<div id=\"page-content-header\" >");
+// out.println("<input id=\"busqueda\" type=\"text\" placeholder=\"Buscar\"/>");
+
                 out.println("<table>");
                 out.println("<thead>");
                     out.println("<tr>");
@@ -208,7 +240,12 @@ out.println("<div id=\"page-content\" class=\"col-lg-4\" style=\"max-height:400p
 
             out.println("<table class=\"table table-striped table-bordered dataTable no-footer\">");
                 out.println("<tbody id=\""+request.getSession().getAttribute("anexo").toString()+"\" class=\"dataTableBody\">");
+                
+                
             for(int i=0;i<lcw.size();i++){
+                if(i==0){
+                    divFirstTime=divDayMark+"record_"+i;
+                }
                 String clase = "odd";
                 String scrollClass="";
                 if(i%2==0){
@@ -240,7 +277,7 @@ out.println("<div id=\"page-content\" class=\"col-lg-4\" style=\"max-height:400p
                             + "onclick=\"rowSelected('"+divDayMark+"record_"+i+"','"+divDayMark+"client_detail_"+i+"');\" "
                             + ">");
                       out.println("<td class=\"col-md-2\" style=\"color:red;\" align=\"center\" id=\"gestion_"+i+"\">"+gestionado+"</td>");
-                      out.println("<td id=\"nombre\">"+cw.getNombre()+"</td>");
+                      out.println("<td id=\"nombre\" class=\"nombre\">"+cw.getNombre()+"</td>");
                     out.println("</tr>");
             }
                   out.println("</tbody>");         
@@ -254,15 +291,22 @@ out.println("<div id=\"page-content\" class=\"col-lg-4\" style=\"max-height:400p
                 out.println("</thead>");
             out.println("</table>");
             out.println("<form action=\"UpdateWurthClientServlet\" method=\"POST\">");
-            for(int k=0;k<lcw.size();k++){
+            for(k=0;k<lcw.size();k++){
                 String visible = "display:none;";
                 defaultCw=lcw.get(k);
+                
                 if(k==initSelected){
                     visible = "display:inline;";
                 }
             
             request.setAttribute("row_"+k, k);
             request.getSession().setAttribute("row_"+k, k);
+            String ultFac;
+            if(defaultCw.getUltFac() == null){
+                ultFac = "";
+            } else {
+                ultFac=df.format(defaultCw.getUltFac());
+            }
             out.println("<div id=\""+divDayMark+"client_detail_"+k+"\" class=\"class_detail\" style=\""+visible+"\">");
             out.println("<label for=\"ncliente_"+k+"\">Ncliente</label>");
             out.println("<input readonly type=\"text\" name=\"ncliente_"+k+"\" id=\"ncliente_"+k+"\" class=\"numclient\" value=\""+defaultCw.getNcliente()+"\"/>");
@@ -297,7 +341,7 @@ out.println("<div id=\"page-content\" class=\"col-lg-4\" style=\"max-height:400p
             out.println("<label for=\"sml_"+k+"\">SML</label>");
             out.println("<input readonly type=\"text\" name=\"sml_"+k+"\" id=\"sml_"+k+"\" value=\""+defaultCw.getSml()+"\"/>");
             out.println("<label for=\"ultfact_"+k+"\">Ultima Factura</label>");
-            out.println("<input readonly type=\"date\" name=\"ultfact_"+k+"\" id=\"ultfact_"+k+"\" value=\""+df.format(defaultCw.getUltFac())+"\"/>");
+            out.println("<input readonly type=\"date\" name=\"ultfact_"+k+"\" id=\"ultfact_"+k+"\" value=\""+ultFac+"\"/>");
             out.println("<label for=\"proyeccion_"+k+"\">Proyeccion</label>");
             out.println("<input readonly type=\"text\" name=\"proyeccion_"+k+"\" id=\"proyeccion_"+k+"\" value=\""+defaultCw.getProyeccion()+"\"/>");
             out.println("<label for=\"var_"+k+"\">Var</label>");
@@ -319,12 +363,13 @@ out.println("<div id=\"page-content\" class=\"col-lg-4\" style=\"max-height:400p
             out.println("<input type=\"hidden\" name=\"record_id_"+k+"\" id=\"record_id_"+k+"\" class=\"recordid\" value=\""+defaultCw.getRecordId()+"\"/>");
             out.println("<input type=\"hidden\" name=\"agent_dn_"+k+"\" id=\"agent_dn_"+k+"\" class=\"agentdn\" value=\""+defaultCw.getAgentDn()+"\"/>");
             out.println("<input type=\"hidden\" name=\"import_id_"+k+"\" id=\"import_id_"+k+"\" class=\"importid\" value=\""+defaultCw.getImportId()+"\"/>");
-            out.println("<input type=\"hidden\" name=\"myField\" id=\"myField\" class=\"myHiddenFieldClass\" value=\"\" />");
+            out.println("<input type=\"hidden\" name=\"myField\" id=\"myField\" class=\"myHiddenFieldClass\" value=\""+divFirstTime+"\" />");
             out.println("</div>");
             }
             out.println("<div>");            
             out.println("<button type=\"button\" id=\""+divDayMark+"call_button\" class=\"btn btn-primary custbtn\">Llamar</button>");         
-            out.println("<button type=\"button\" id=\""+divDayMark+"hist_button\" class=\"btn btn-primary custbtn\">Histórico Llamadas</button>");            
+            out.println("<button type=\"button\" id=\""+divDayMark+"hist_button\" class=\"btn btn-primary custbtn\">Histórico Llamadas</button>");         
+            out.println("<button type=\"button\" id=\""+divDayMark+"sale_button\" class=\"btn btn-primary custbtn\">Histórico Ventas</button>");            
             out.println("<button type=\"button\" id=\""+divDayMark+"edit_button\" class=\"btn btn-primary custbtn\">Editar Datos</button>");         
             out.println("<button type=\"submit\" id=\""+divDayMark+"save_button\" class=\"btn btn-primary custbtn\" disabled>Guardar Cambios</button>");          
             //out.println("<button type=\"button\" id=\""+divDayMark+"test_button\" class=\"btn btn-primary custbtn\">Test</button>");      
@@ -371,7 +416,7 @@ out.println("<div id=\"page-content\" class=\"col-lg-4\" style=\"max-height:400p
                         out.println("</select>");
                         out.println("<br>");
                         out.println("<label for=\"observacionInfo\">Observaciones</label><br>");
-                        out.println("<textarea name=\"observacionInfo\" id=\"observacionInfo\" placeholder=\"Inserte una frase de 10 caracteres minimo y 60 maximo\" maxlength=\"60\"></textarea>");
+                        out.println("<textarea name=\"observacionInfo\" id=\"observacionInfo\" placeholder=\"Inserte una frase de 10 caracteres minimo y 300 maximo\" maxlength=\"300\"></textarea>");
                         out.println("<br>");
                         out.println("<label for=\"schedRadio\">¿Desea agendar la gestión?</label><br>");                           
                         out.println("<div id=\"schedRadio\">");   
@@ -390,15 +435,89 @@ out.println("<div id=\"page-content\" class=\"col-lg-4\" style=\"max-height:400p
             out.println("</div>");
             out.println("</body>");
             out.println("</html>");
-            //request.setAttribute("id_cliente", cw.getIdCliente());
-            //RequestDispatcher rd = request.getRequestDispatcher("agent.jsp");            
-            //rd.forward(request, response);
             
-            /*rd= request.getRequestDispatcher("/Agent2Servlet");
-            rd.forward(request, response);*/
-        }
-    }
 
+            
+        }
+        
+    }
+  
+       public void run(){
+           try {
+             while(true){
+
+        System.out.println("estoy en el hilo");
+
+
+
+         
+    
+
+       
+
+         List<CtWurth2> consulta=null;
+             
+             CtWurth2 var;
+           
+                       JavaBeanCtWurth2 objeto = new JavaBeanCtWurth2();
+
+           
+             
+                   consulta=objeto.findCtWurthEntitiesByAgenda(Nombreglobal);
+              
+ 
+     for(int i=0;i<consulta.size();i++){
+             
+              var=consulta.get(i);
+                
+                            // out.println("<label>hola mundo</label>");
+
+    //out.println("<label>"+agenda.getNombre()+"</label>");
+Date fecha = new Date();
+long time = System.currentTimeMillis();
+	String millis = Long.toString(time);
+	Date date = new Date(time);
+	
+                       
+SimpleDateFormat formatofecha= new SimpleDateFormat("dd/MM/yyyy HH:mm");
+String fechaagenda =formatofecha.format(var.getSchedTime());
+
+String fechasiste =formatofecha.format(date);
+String nombrecliente = var.getNombre();
+System.out.println("fecha agenda"+fechaagenda);
+System.out.println("sistema"+fechasiste);
+
+
+
+
+              //out.println("<label>"+fechaagenda+"</label>");  
+                                    //out.println("<label>"+fechasiste+"</label>");  
+
+                                    
+                                    
+
+                       
+  if(fechaagenda.equals(fechasiste)){
+
+  DesktopNotify.showDesktopMessage("Recordatorio: ", "Tiene al  cliente"+ " "+nombrecliente+" " + "agendado para este momento",
+      DesktopNotify.SUCCESS);
+      
+
+      
+  }                                 
+                                    
+
+    
+}
+           
+     
+                Thread.sleep(60000);
+               }
+            
+                   } catch (InterruptedException ex) { 
+         Logger.getLogger(Agent2Servlet.class.getName()).log(Level.SEVERE, null, ex);
+     } 
+       }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -437,5 +556,7 @@ out.println("<div id=\"page-content\" class=\"col-lg-4\" style=\"max-height:400p
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+ 
 
 }

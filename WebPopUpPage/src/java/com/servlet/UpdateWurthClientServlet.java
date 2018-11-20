@@ -47,12 +47,86 @@ public class UpdateWurthClientServlet extends HttpServlet {
             rowid=rowid.replace("record_", "");
             rowid=rowid.replace("hoy_", "");
             rowid=rowid.replace("sch_", "");
-            JavaBeanCtWurth2 jbcw = new JavaBeanCtWurth2();  
-            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            Date ultFactUpd = format.parse(request.getParameter("ultfact_"+rowid));
+            JavaBeanCtWurth2 jbcw = new JavaBeanCtWurth2(); 
             Long recordId = Long.parseLong(request.getParameter("record_id_"+rowid));            
             CtWurth2 cwUpd = new CtWurth2();       
             CtWurth2 cwOrg = jbcw.findCtWurth2(recordId);
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat format2 = new SimpleDateFormat("yyyy/MM/dd");
+            Date ultFactUpd = cwOrg.getUltFac(); 
+            String stUltFac = request.getParameter("ultfact_"+rowid);
+            if(stUltFac != null){
+                if(!stUltFac.equals("")){
+                    try{
+                        ultFactUpd = format.parse(stUltFac);
+                    } catch(Exception e){
+                         ultFactUpd = format2.parse(stUltFac);
+                    }                    
+                }
+            }
+            String stNCliente = request.getParameter("ncliente_"+rowid);
+            int intNcliente;
+            if(stNCliente != null  && !stNCliente.isEmpty() && !stNCliente.equals("null")){
+                intNcliente = Integer.parseInt(stNCliente);
+            } 
+                else if(cwOrg.getNcliente()==null){
+                intNcliente= 0;
+            } 
+            
+            
+            
+            
+            else{
+                intNcliente = cwOrg.getNcliente();
+            }
+            
+            String stTelefono = request.getParameter("telefono_"+rowid);
+            int intTelefono;
+            if(stTelefono != null  && !stTelefono.isEmpty() && !stTelefono.equals("null")){
+                intTelefono = Integer.parseInt(stTelefono);
+            }
+            
+                  else if(cwOrg.getTelefono()==null){
+                intTelefono= 0;
+            } 
+            
+            
+     
+            
+            else{
+                intTelefono = cwOrg.getTelefono();
+            }
+            
+            String stNroSup = request.getParameter("nro_sup_"+rowid);
+            int intNroSup;
+            if(stNroSup != null  && !stNroSup.isEmpty() && !stNroSup.equals("null") ){
+                
+                intNroSup = Integer.parseInt(stNroSup);
+            }
+            else if(cwOrg.getNroSup()==null){
+                intNroSup = 0;
+            } 
+            else{
+                intNroSup = cwOrg.getNroSup();
+                
+            }
+            
+            String stNroVen = request.getParameter("nro_ven_"+rowid);
+            int intNroVen;
+            if(stNroVen != null  && !stNroVen.isEmpty()  && !stNroVen.equals("null")){
+                intNroVen = Integer.parseInt(stNroVen);
+            }
+            
+               else if(cwOrg.getNroVen()==null){
+                intNroVen = 0;
+            } 
+            
+            
+            
+            
+            else{
+                intNroVen = cwOrg.getNroVen();
+            }
             cwUpd.setRecordType(cwOrg.getRecordType());    
             cwUpd.setCallTime(cwOrg.getCallTime());
             cwUpd.setSchedTime(cwOrg.getSchedTime());         
@@ -62,11 +136,11 @@ public class UpdateWurthClientServlet extends HttpServlet {
             cwUpd.setCallResult(cwOrg.getCallResult());
             cwUpd.setCrrTime(cwOrg.getCrrTime());
             cwUpd.setAgentDn(request.getSession().getAttribute("username").toString());
-            cwUpd.setNcliente(Integer.parseInt(request.getParameter("ncliente_"+rowid)));
+            cwUpd.setNcliente(intNcliente);
             cwUpd.setNombre(request.getParameter("nombre_"+rowid));
             cwUpd.setComuna(request.getParameter("comuna_"+rowid));
             cwUpd.setDireccion(request.getParameter("direccion_"+rowid));
-            cwUpd.setTelefono(Integer.parseInt(request.getParameter("telefono_"+rowid)));
+            cwUpd.setTelefono(intTelefono);
             cwUpd.setContactInfo(request.getParameter("telefono_"+rowid));
             cwUpd.setRamo(request.getParameter("ramo_"+rowid));
             cwUpd.setDivision(request.getParameter("division_"+rowid));
@@ -84,9 +158,9 @@ public class UpdateWurthClientServlet extends HttpServlet {
             cwUpd.setVar(request.getParameter("var_"+rowid));
             cwUpd.setLeyenda(request.getParameter("leyenda_"+rowid));
             cwUpd.setQryVendedoresGrupo(request.getParameter("qry_"+rowid));
-            cwUpd.setNroSup(Integer.parseInt(request.getParameter("nro_sup_"+rowid)));
+            cwUpd.setNroSup(intNroSup);
             cwUpd.setNomSup(request.getParameter("nom_sup_"+rowid));
-            cwUpd.setNroVen(Integer.parseInt(request.getParameter("nro_ven_"+rowid)));
+            cwUpd.setNroVen(intNroVen);
             cwUpd.setNomVen(request.getParameter("nom_ven_"+rowid));
             cwUpd.setObservacion(request.getParameter("observacion_"+rowid));
             cwUpd.setRecordId(recordId);

@@ -32,4 +32,16 @@ public class JavaBeanLogSurveyInteractionsWebPage {
     public List getHistoricoGestion(String ncliente){
         return logsControl.getHistoricoGestion(ncliente);
     }
+    
+    
+     public List reporte(String fecha1, String fecha2,String nombre){
+        return logsControl.reporte(fecha1, fecha2, nombre);
+                
+    }
+    
+    public List reporte2(String fecha1, String fecha2,String nombre){
+        return logsControl.reporte2(fecha1, fecha2, nombre);
+                
+    }
+    
 }

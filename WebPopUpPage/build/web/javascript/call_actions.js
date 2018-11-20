@@ -65,10 +65,30 @@ $(document).ready(function(){
         //$("#"+globalDetail).css({display:"inline"});
         
      });
+     
+    // $("#busqueda").change(function(){
+        //     var valor= $(this).val();
+        //   var dataTable = Array.from(document.getElementsByClassName("dataTableBody")); 
+         // var nombres = document.getElementsByClassName("nombre");
+         
+         
+         
+                  //   for (h=0;h<nombres.length;h++){
+                   //       var hola = nombres[h];
+                     //     alert(nombres);
+                         
+                   //  }
+         
+     
+         
+   //   });
         
         $("#hoy_call_button,#sch_call_button").click(function(){
-            var dataTable = Array.from(document.getElementsByClassName("dataTableBody"));      
-            var anexo = dataTable[0].id;            
+            var dataTable = Array.from(document.getElementsByClassName("dataTableBody"));   
+            
+            
+            var anexo = dataTable[0].id;   
+           
             var fonoParent = document.getElementsByClassName("fono");  
             var nClientParent = document.getElementsByClassName("numclient"); 
             var nomClientParent = document.getElementsByClassName("nomclient"); 
@@ -273,10 +293,33 @@ $(document).ready(function(){
             window.open("/WebPopUpPage/CallHistoryServlet?histCliente="+ncliente,'mywindow','width=1200,height=600,toolbar=no,location=no');
         });
         
+        $("#hoy_sale_button,#sch_sale_button").click(function(){
+            var nClientParent = document.getElementsByClassName("numclient");
+            var nomClientParent = document.getElementsByClassName("nomclient");
+            var ncliente="";  
+            var nomclient="";     
+            for (j=0;j<nClientParent.length;j++){
+                var parent = nClientParent[j].parentNode;
+                if (parent.style.display === 'inline'){
+                    ncliente = nClientParent[j].value;                    
+                }
+            }
+            for (j=0;j<nomClientParent.length;j++){
+                var parent = nomClientParent[j].parentNode;
+                if (parent.style.display === 'inline'){
+                    nomclient = nomClientParent[j].value;                    
+                }
+            }
+            nomclient = nomclient.replace(" ","+");
+            window.open("/WebPopUpPage/InfoProductosServlet?infoProductos="+ncliente+"&nomCliente="+nomclient,'mywindow','width=1200,height=600,toolbar=no,location=no');
+            //window.open("/WebPopUpPage/InfoProductosServlet",'mywindow','width=1200,height=600,toolbar=no,location=no');
+        });
+        
         $("#tipifBox").change(function(){
             var val = $(this).val();
             if(val==="ANSWER"){
                 $("#contactBox").prop("disabled", false);
+                $("#cotizaBox").prop("disabled", false);
                 $("#contactBox").val("contacto_directo");
                 $("#cotizaBox").val("si"); 
             } else {

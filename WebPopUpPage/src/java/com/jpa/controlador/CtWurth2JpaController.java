@@ -5,7 +5,9 @@
  */
 package com.jpa.controlador;
 
+import com.bean.JavaBeanCfgImports;
 import com.bean.exceptions.NonexistentEntityException;
+import com.entidades.CfgImports;
 import com.entidades.CtWurth2;
 import com.entidades.HistoricoGestion;
 import java.io.Serializable;
@@ -154,6 +156,57 @@ public class CtWurth2JpaController implements Serializable {
                     cal.set(Calendar.MILLISECOND, 0);
             tqcw.setParameter("agentDn", username);
             tqcw.setParameter("schedTime",cal.getTime());
+            
+            List<CtWurth2> lcw = tqcw.getResultList();
+            return lcw;
+        } finally {
+            em.close();
+        }
+    }
+        
+        
+       
+        
+        
+        public List<CtWurth2> findCtWurthEntitiesByAgenda (String username) {
+        EntityManager em = getEntityManager();
+        try {            
+            TypedQuery<CtWurth2> tqcw = em.createNamedQuery("CtWurth2.findByagenda",
+                    CtWurth2.class);                  
+            Calendar cal = Calendar.getInstance(); // locale-specific
+                    cal.setTime(new Date());
+                    cal.set(Calendar.HOUR_OF_DAY, 0);
+                    cal.set(Calendar.MINUTE, 0);
+                    cal.set(Calendar.SECOND, 0);
+                    cal.set(Calendar.MILLISECOND, 0);
+            tqcw.setParameter("agentDn", username);
+            tqcw.setParameter("schedTime",cal.getTime());
+            
+            List<CtWurth2> lcw = tqcw.getResultList();
+            return lcw;
+        } finally {
+            em.close();
+        }
+    }
+         
+       
+        
+      public List<CtWurth2> findCtWurthEntitiesByImport(String username) {
+        EntityManager em = getEntityManager();
+        try {            
+            TypedQuery<CtWurth2> tqcw = em.createNamedQuery("CtWurth2.findByImport",
+                    CtWurth2.class); 
+            int maxImportId =0;
+            JavaBeanCfgImports jbci = new JavaBeanCfgImports();
+            List<CfgImports> lci =jbci.findCfgImportsEntities();
+            for(int i=0;i<lci.size();i++){
+                int importId = lci.get(i).getId();
+                if(importId>maxImportId){
+                    maxImportId=importId;
+                }
+            }
+            tqcw.setParameter("agentDn", username);
+            tqcw.setParameter("importId",maxImportId);
             
             List<CtWurth2> lcw = tqcw.getResultList();
             return lcw;

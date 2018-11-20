@@ -31,14 +31,39 @@ public class JavaBeanCtWurth2 {
         return ctwControl.findCtWurthEntitiesByTodayTime(username);
     }
     
+    public List<CtWurth2> findCtWurthEntitiesByImport(String username){
+        return ctwControl.findCtWurthEntitiesByImport(username);
+    }
     public List<CtWurth2> findCtWurthEntitiesBySchedTime(String username){
         return ctwControl.findCtWurthEntitiesBySchedTime(username);
     }
+    
+    
+    
+      public List<CtWurth2> findCtWurthEntitiesByAgenda(String username){
+        return ctwControl.findCtWurthEntitiesBySchedTime(username);
+    }
+    
+    
+    
+    
+    
+    
+    public void create(CtWurth2 ctWurth2) {
+     ctwControl.create(ctWurth2);
+    }
+    
+    
+    
+    
+    
     public void edit(CtWurth2 ctWurth2) throws NonexistentEntityException, Exception {
         ctwControl.edit(ctWurth2);
     }
     
     public CtWurth2 findCtWurth2(Long id) {
         return ctwControl.findCtWurth2(id);
+        
+        
     }
 }

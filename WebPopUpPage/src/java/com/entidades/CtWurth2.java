@@ -74,7 +74,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "CtWurth2.findByNomVen", query = "SELECT c FROM CtWurth2 c WHERE c.nomVen = :nomVen")
     , @NamedQuery(name = "CtWurth2.findByObservacion", query = "SELECT c FROM CtWurth2 c WHERE c.observacion = :observacion")
     , @NamedQuery(name = "CtWurth2.findByToday", query = "SELECT c FROM CtWurth2 c WHERE c.agentDn = :agentDn and c.crrTime >= :crrTime")
-    , @NamedQuery(name = "CtWurth2.findBySched", query = "SELECT c FROM CtWurth2 c WHERE c.agentDn = :agentDn and FUNC('DATE',c.schedTime) = FUNC('DATE',:schedTime)")})
+    , @NamedQuery(name = "CtWurth2.findBySched", query = "SELECT c FROM CtWurth2 c WHERE c.agentDn = :agentDn and FUNC('DATE',c.schedTime) = FUNC('DATE',:schedTime)")
+        
+      , @NamedQuery(name = "CtWurth2.findByagenda", query = "SELECT c FROM CtWurth2 c WHERE c.agentDn = :agentDn and c.schedTime is not null")
+
+        
+        
+        
+    , @NamedQuery(name = "CtWurth2.findByImport", query = "SELECT c FROM CtWurth2 c WHERE c.agentDn = :agentDn and c.importId = :importId")})
 public class CtWurth2 implements Serializable {
 
     private static final long serialVersionUID = 1L;

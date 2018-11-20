@@ -47,6 +47,18 @@
         <servlet-name>Superv2Servlet</servlet-name>
         <servlet-class>com.servlet.Superv2Servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletSuperInicio</servlet-name>
+        <servlet-class>com.servlet.ServletSuperInicio</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CargarListaServlet</servlet-name>
+        <servlet-class>com.servlet.CargarListaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InfoProductosServlet</servlet-name>
+        <servlet-class>com.servlet.InfoProductosServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MServlet</servlet-name>
         <url-pattern>/MServlet</url-pattern>
@@ -82,6 +94,18 @@
     <servlet-mapping>
         <servlet-name>Superv2Servlet</servlet-name>
         <url-pattern>/Superv2Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletSuperInicio</servlet-name>
+        <url-pattern>/ServletSuperInicio</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CargarListaServlet</servlet-name>
+        <url-pattern>/CargarListaServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InfoProductosServlet</servlet-name>
+        <url-pattern>/InfoProductosServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

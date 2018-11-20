@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.NamedStoredProcedureQueries;
 import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureParameter;
@@ -61,13 +62,35 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "LogsSurveyInteractionsWebPage.findByCdata03", query = "SELECT l FROM LogsSurveyInteractionsWebPage l WHERE l.cdata03 = :cdata03")
     , @NamedQuery(name = "LogsSurveyInteractionsWebPage.findByCdata04", query = "SELECT l FROM LogsSurveyInteractionsWebPage l WHERE l.cdata04 = :cdata04")
     , @NamedQuery(name = "LogsSurveyInteractionsWebPage.findByCdata05", query = "SELECT l FROM LogsSurveyInteractionsWebPage l WHERE l.cdata05 = :cdata05")})
-@NamedStoredProcedureQuery(
+@NamedStoredProcedureQueries({
+    @NamedStoredProcedureQuery(
 	name = "sp_getHistoricoGestionCliente", 
 	procedureName = "sp_getHistoricoGestionCliente", 
 	parameters = { 
 		@StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "p_cliente")
-	}
-)
+	})
+    ,@NamedStoredProcedureQuery(
+	name = "sp_getTotalGestiones", 
+	procedureName = "sp_getTotalGestiones", 
+	parameters = { 
+		@StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "p_fechaini"),
+                @StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "p_fechafin"),
+                 @StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "p_usuarios")
+	})
+        ,@NamedStoredProcedureQuery(
+	name = "sp_getResumenGestiones", 
+	procedureName = "sp_getResumenGestiones", 
+	parameters = { 
+		@StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "p_fechaini"),
+                @StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "p_fechafin"),
+                 @StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "p_usuarios")
+	})
+})
+
+
+
+
+
 public class LogsSurveyInteractionsWebPage implements Serializable,Cloneable {
 
     private static final long serialVersionUID = 1L;
